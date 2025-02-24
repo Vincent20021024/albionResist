@@ -43,4 +43,3 @@ function calculateDamageIncrease() {
 
     // 顯示計算結果
     document.getElementById('damageIncreaseResult').textContent = damageIncrease.toFixed(2);
-}
