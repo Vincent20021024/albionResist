@@ -21,15 +21,26 @@ function calculateResistance() {
         document.getElementById("calculatedResistance").textContent = "错误: 真实伤害必须大于0";
     }
 }
+
 function calculateDamageIncrease() {
-    const monsterResistance = parseFloat(document.getElementById('monsterResistance').value);
-    const resistanceReduction = parseFloat(document.getElementById('resistanceReduction').value);
-    
-    if (isNaN(monsterResistance) || isNaN(resistanceReduction) || monsterResistance <= resistanceReduction) {
-        alert("請輸入有效的數字，並確保怪物抗性大於抗性減少！");
+    // 獲取用戶輸入的怪物抗性和抗性減少
+    let monsterResistance = parseFloat(document.getElementById('monsterResistance').value);
+    let resistanceReduction = parseFloat(document.getElementById('resistanceReduction').value);
+
+    // 檢查用戶輸入是否有效
+    if (isNaN(monsterResistance) || isNaN(resistanceReduction)) {
+        alert("請輸入有效的數字！");
         return;
     }
 
-    const damageIncrease = monsterResistance / (monsterResistance - resistanceReduction);
-    document.getElementById('result').innerText = "傷害增幅: " + damageIncrease.toFixed(2);
+    // 計算傷害增幅，根據公式：damage increase = monster resistance / (monster resistance - resistance reduction)
+    if (monsterResistance <= resistanceReduction) {
+        alert("抗性減少不能大於或等於怪物抗性！");
+        return;
+    }
+
+    let damageIncrease = monsterResistance / (monsterResistance - resistanceReduction);
+
+    // 顯示計算結果
+    document.getElementById('damageIncreaseResult').textContent = damageIncrease.toFixed(2);
 }
