@@ -1,39 +1,50 @@
-function calculateDamage(calculatorId) {
-    const calculator = document.getElementById(calculatorId);
-    const skillDamage = parseFloat(calculator.querySelector("#skillDamage").value);
-    const damageBonus = parseFloat(calculator.querySelector("#damageBonus").value) / 100;
-    const raiderBonus = parseFloat(calculator.querySelector("#raiderBonus").value) / 100;
-    const resistance = parseFloat(calculator.querySelector("#resistance").value);
+function calculateDamage() {
+    let skillDamage = parseFloat(document.getElementById("skillDamage").value);
+    let damageBonus = parseFloat(document.getElementById("damageBonus").value) / 100 + 1;
+    let raiderBonus = parseFloat(document.getElementById("raiderBonus").value) / 100 + 1;
+    let resistance = parseFloat(document.getElementById("resistance").value);
     
-    const trueDamage = skillDamage * (1 + damageBonus + raiderBonus) * (1 - resistance / 100);
-    
-    calculator.querySelector("#trueDamage").textContent = trueDamage.toFixed(2);
+    let trueDamage = skillDamage * damageBonus * raiderBonus * (100 / (100 + resistance));
+    document.getElementById("trueDamage").textContent = trueDamage.toFixed(2);
 }
 
-function calculateResistance(calculatorId) {
-    const calculator = document.getElementById(calculatorId);
-    const trueDamage = parseFloat(calculator.querySelector("#trueDamageInput").value);
-    const skillDamage = parseFloat(calculator.querySelector("#trueDamageSkillDamage").value);
-    const damageBonus = parseFloat(calculator.querySelector("#trueDamageDamageBonus").value) / 100;
-    const raiderBonus = parseFloat(calculator.querySelector("#trueDamageRaiderBonus").value) / 100;
+function calculateResistance() {
+    let skillDamage = parseFloat(document.getElementById("skillDamage").value);
+    let damageBonus = parseFloat(document.getElementById("damageBonus").value) / 100 + 1;
+    let raiderBonus = parseFloat(document.getElementById("raiderBonus").value) / 100 + 1;
+    let trueDamage = parseFloat(document.getElementById("trueDamageInput").value);
     
-    const resistance = 100 * (1 - trueDamage / (skillDamage * (1 + damageBonus + raiderBonus)));
-    
-    calculator.querySelector("#calculatedResistance").textContent = resistance.toFixed(2);
+    if (trueDamage > 0) {
+        let resistance = 100 * ((skillDamage * damageBonus * raiderBonus) / trueDamage) - 100;
+        document.getElementById("calculatedResistance").textContent = resistance.toFixed(2);
+    } else {
+        document.getElementById("calculatedResistance").textContent = "錯误: 真實傷害必須大于0";
+    }
 }
 
 function calculateDamageIncrease() {
-    const monsterResistance = parseFloat(document.getElementById("monsterResistance").value);
-    const resistanceReduction = parseFloat(document.getElementById("resistanceReduction").value);
-    
-    if (monsterResistance <= resistanceReduction) {
-        document.getElementById("damageIncreaseResult").textContent = "無效的抗性減少!";
+    // 獲取用戶輸入的怪物抗性和抗性減少
+    let monsterResistance = parseFloat(document.getElementById('monsterResistance').value);
+    let resistanceReduction = parseFloat(document.getElementById('resistanceReduction').value);
+
+    // 檢查用戶輸入是否有效
+    if (isNaN(monsterResistance) || isNaN(resistanceReduction)) {
+        alert("請輸入有效的數字！");
         return;
     }
-    
-    const damageIncrease = monsterResistance / (monsterResistance - resistanceReduction);
-    document.getElementById("damageIncreaseResult").textContent = damageIncrease.toFixed(2);
-}
+
+    // 計算傷害增幅，根據公式：damage increase = monster resistance / (monster resistance - resistance reduction)
+    if (monsterResistance <= resistanceReduction) {
+        alert("抗性減少不能大於或等於怪物抗性！");
+        return;
+    }
+
+    let damageIncrease = monsterResistance / (monsterResistance - resistanceReduction);
+
+    // 顯示計算結果
+    document.getElementById('damageIncreaseResult').textContent = damageIncrease.toFixed(2);
+} 
+
 
 
 
