@@ -5,12 +5,19 @@ body {
     text-align: center;
 }
 
+.container-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* 控制計算器之間的間距 */
+}
+
 .container {
     background: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: inline-block;
+    flex: 1; /* 讓每個計算器等寬 */
+    max-width: 300px; /* 設定最大寬度 */
 }
 
 h1 {
@@ -41,4 +48,12 @@ button:hover {
 p {
     font-size: 18px;
     color: #333;
+}
+
+/* 讓畫面在小螢幕時自動換行 */
+@media (max-width: 768px) {
+    .container-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
 }
