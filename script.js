@@ -1,8 +1,14 @@
 function calculateDamage(calculatorId) {
+    // 獲取對應計算器
     let calculator = document.getElementById(calculatorId);
+    
     let skillDamage = parseFloat(calculator.querySelector("#skillDamage").value);
     let damageBonus = parseFloat(calculator.querySelector("#damageBonus").value) / 100 + 1;
-    let raiderBonus = parseFloat(calculator.querySelector("#raiderBonus").value) / 100 + 1;
+    
+    // 根據計算器 ID 來選擇 raiderBonus
+    let raiderBonusId = calculatorId === "damageCalculator" ? "#raiderBonus" : "#trueDamageRaiderBonus";
+    let raiderBonus = parseFloat(calculator.querySelector(raiderBonusId).value) / 100 + 1;
+    
     let resistance = parseFloat(calculator.querySelector("#resistance").value);
     
     let trueDamage = skillDamage * damageBonus * raiderBonus * (100 / (100 + resistance));
@@ -11,9 +17,14 @@ function calculateDamage(calculatorId) {
 
 function calculateResistance(calculatorId) {
     let calculator = document.getElementById(calculatorId);
-    let skillDamage = parseFloat(calculator.querySelector("#skillDamage").value);
-    let damageBonus = parseFloat(calculator.querySelector("#damageBonus").value) / 100 + 1;
-    let raiderBonus = parseFloat(calculator.querySelector("#raiderBonus").value) / 100 + 1;
+    
+    let skillDamage = parseFloat(calculator.querySelector("#trueDamageSkillDamage").value);
+    let damageBonus = parseFloat(calculator.querySelector("#trueDamageDamageBonus").value) / 100 + 1;
+    
+    // 根據計算器 ID 來選擇 raiderBonus
+    let raiderBonusId = calculatorId === "damageCalculator" ? "#raiderBonus" : "#trueDamageRaiderBonus";
+    let raiderBonus = parseFloat(calculator.querySelector(raiderBonusId).value) / 100 + 1;
+
     let trueDamage = parseFloat(calculator.querySelector("#trueDamageInput").value);
     
     if (trueDamage > 0) {
@@ -41,6 +52,7 @@ function calculateDamageIncrease() {
     let damageIncrease = monsterResistance / (monsterResistance - resistanceReduction);
     document.getElementById('damageIncreaseResult').textContent = damageIncrease.toFixed(2);
 }
+
 
 
 
