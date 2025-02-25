@@ -30,6 +30,14 @@ input {
     width: 100px;
 }
 
+select {
+    width: 100%;  /* 讓選單寬度佔滿父容器 */
+    height: 35px;  /* 改變高度 */
+    font-size: 16px;  /* 改變字型大小，讓選項更容易閱讀 */
+    padding: 5px;  /* 內邊距，讓選項看起來更有空間 */
+    margin: 5px;  /* 增加 margin 讓選項之間有間距 */
+}
+
 button {
     margin-top: 10px;
     padding: 10px 15px;
@@ -57,3 +65,4 @@ p {
         align-items: center;
     }
 }
+
