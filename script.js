@@ -29,6 +29,9 @@ function calculateResistance(calculatorId) {
     
     if (trueDamage > 0) {
         let resistance = 100 * ((skillDamage * damageBonus * raiderBonus) / trueDamage) - 100;
+        if (resistance <= 0) {
+            calculator.querySelector("#calculatedResistance").textContent = "錯誤: 計算出的抗性不能小於或等於0";
+        } else {
         calculator.querySelector("#calculatedResistance").textContent = resistance.toFixed(2);
     } else {
         calculator.querySelector("#calculatedResistance").textContent = "錯誤: 真實傷害必須大於0";
